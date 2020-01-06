@@ -2,7 +2,8 @@
 
 require_once('jobs.php');
 
-$name = 'Hector Benitez';
+$name = 'Juan Pintos';
+
 $limitMonths = 2000;
 
 ?>
@@ -31,9 +32,9 @@ $limitMonths = 2000;
       </div>
       <div class="col">
         <h1><?php echo $name; ?></h1>
-        <h2>PHP Developer</h2>
+        <h2>Programador Web</h2>
         <ul>
-          <li>Mail: hector@mail.com</li>
+          <li>email: antesdeldomingo@gmail.com</li>
           <li>Phone: 1234567890</li>
           <li>LinkedIn: https://linkedin.com</li>
           <li>Twitter: @hectorbenitez</li>
@@ -42,7 +43,7 @@ $limitMonths = 2000;
     </div>
     <div class="row">
       <div class="col">
-        <h2 class="border-bottom-gray" >Carrer Summary</h2>
+        <h2 class="border-bottom-gray" >Resumen de la carrera</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -52,54 +53,32 @@ $limitMonths = 2000;
     <div class="row">
       <div class="col">
         <div>
-          <h3 class="border-bottom-gray" >Work Experience</h3>
+          <h3 class="border-bottom-gray" >Experiencia Laboral</h3>
           <ul>
             <?php
             $totalMonths = 0;
-            for($idx = 0;$idx < count($jobs); $idx++) {
+            for($i = 0;$i < count($jobs); $i++) {
               // $totalMonths = $totalMonths + $jobs[$idx]['months'];
-              $totalMonths += $jobs[$idx]->months;
+              $totalMonths += $jobs[$i]->meses;
               if($totalMonths > $limitMonths) {
                 break;
               }
 
-              printJob($jobs[$idx]);
+              imprimirElementos($jobs[$i]);
             }
             ?>
           </ul>
         </div>
         <div>
             <h3 class="border-bottom-gray">Projects</h3>
-            <div class="project">
-                <h5>Project X</h5>
-                <div class="row">
-                    <div class="col-3">
-                        <img id="profile-picture" src="https://ui-avatars.com/api/?name=John+Doe&size=255" alt="">
-                      </div>
-                      <div class="col">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius earum corporis at accusamus quisquam hic quos vel? Tenetur, ullam veniam consequatur esse quod cum, quam cupiditate assumenda natus maiores aperiam.</p>
-                        <strong>Technologies used:</strong>
-                        <span class="badge badge-secondary">PHP</span>
-                        <span class="badge badge-secondary">HTML</span>
-                        <span class="badge badge-secondary">CSS</span>
-                      </div>
-                </div>
-            </div>
-            <div class="project">
-                <h5>Project X</h5>
-                <div class="row">
-                    <div class="col-3">
-                        <img id="profile-picture" src="https://ui-avatars.com/api/?name=John+Doe&size=255" alt="">
-                      </div>
-                      <div class="col">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius earum corporis at accusamus quisquam hic quos vel? Tenetur, ullam veniam consequatur esse quod cum, quam cupiditate assumenda natus maiores aperiam.</p>
-                        <strong>Technologies used:</strong>
-                        <span class="badge badge-secondary">PHP</span>
-                        <span class="badge badge-secondary">HTML</span>
-                        <span class="badge badge-secondary">CSS</span>
-                      </div>
-                </div>
-            </div>
+            
+            <?php
+            for($i = 0; $i < count($projects); $i++) {
+
+              imprimirElementos($projects[$i]);
+
+            }
+            ?>           
           </div>
       </div>
       <div class="col-3">
