@@ -1,8 +1,31 @@
 <?php
 
-require_once 'BaseElement.php';
+namespace modelos;
 
-class Job extends BaseElement {
+require_once 'BaseElement.php';
+require_once 'Printable.php';
+
+class Job extends BaseElement implements Printable {
+
+    public function __construct($contTitulo, $contDescripcion) 
+    {
+        $newContTitulo = 'Job '.$contTitulo;
+
+        parent::__construct($newContTitulo, $contDescripcion);
+    }
+
+    
+    public function obtenerTitulo() {
+
+        return $this->titulo;
+
+    }
+
+    public function obtenerDescripcion() {
+
+        return $this->descripcion;
+
+    }
 
 
 }

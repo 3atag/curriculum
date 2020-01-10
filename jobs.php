@@ -1,8 +1,13 @@
 <?php
 
+
 require 'modelos/Job.php';
 require 'modelos/Project.php';
+require_once 'modelos/Printable.php';
 
+require 'libreriaX/Project.php';
+
+use modelos\{Job,Project,Printable};
 
 $job1 = new Job('Programador PHP', 'Este es un trabajo increible');
 
@@ -22,6 +27,10 @@ $jobs = [
 
 
 $project1 = new Project ('Intranet','Sistema Intranet para CPHA');
+$project1->visible = true;
+$project1->meses = 11;
+
+$projectLibX = new libreriaX\Project();
 
 $projects = [
     $project1
@@ -29,7 +38,7 @@ $projects = [
 
 
 
-function imprimirElementos($elemento)
+function imprimirElementos(Printable $elemento)
 {
 
     if ($elemento->visible == false) {
@@ -38,17 +47,18 @@ function imprimirElementos($elemento)
 
     echo '
     <div class="project">
-                <h5>'.$elemento->getTitulo().'</h5>
+                <h5>'.$elemento->obtenerTitulo().'</h5>
                 <div class="row">
                     <div class="col-3">
                         <img id="profile-picture" src="https://ui-avatars.com/api/?name=John+Doe&size=255" alt="">
                       </div>
-                      <div class="col">'.$elemento->getDescripcion().'.</p>
+                      <div class="col">'.$elemento->obtenerDescripcion().'.</p>
                         <strong>Technologies used:</strong>
                         <span class="badge badge-secondary">PHP</span>
                         <span class="badge badge-secondary">HTML</span>
                         <span class="badge badge-secondary">CSS</span>
                       </div>
+                      <p>'.$elemento->getDuracion().'</p>
                 </div>
             </div>';
             
