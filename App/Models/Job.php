@@ -1,9 +1,6 @@
 <?php
 
-namespace modelos;
-
-require_once 'BaseElement.php';
-require_once 'Printable.php';
+namespace App\Models;
 
 class Job extends BaseElement implements Printable {
 

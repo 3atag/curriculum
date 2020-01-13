@@ -1,11 +1,6 @@
 <?php
 
-namespace modelos;
-
-// namespace app\modelos;
-
-require_once 'BaseElement.php';
-require_once 'Printable.php';
+namespace App\Models;
 
 class Project extends BaseElement implements Printable {
 

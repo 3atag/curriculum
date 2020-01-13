@@ -1,6 +1,6 @@
 <?php
 
-namespace modelos;
+namespace App\Models;
 
 class BaseElement
 {

@@ -1,13 +1,8 @@
 <?php
 
+require_once 'vendor/autoload.php';
 
-require 'modelos/Job.php';
-require 'modelos/Project.php';
-require_once 'modelos/Printable.php';
-
-require 'libreriaX/Project.php';
-
-use modelos\{Job,Project,Printable};
+use App\Models\{Job,Project,Printable};
 
 $job1 = new Job('Programador PHP', 'Este es un trabajo increible');
 
@@ -30,7 +25,7 @@ $project1 = new Project ('Intranet','Sistema Intranet para CPHA');
 $project1->visible = true;
 $project1->meses = 11;
 
-$projectLibX = new libreriaX\Project();
+
 
 $projects = [
     $project1
