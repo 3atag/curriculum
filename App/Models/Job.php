@@ -2,28 +2,14 @@
 
 namespace App\Models;
 
-class Job extends BaseElement implements Printable {
+use Illuminate\Database\Eloquent\Model;
 
-    public function __construct($contTitulo, $contDescripcion) 
-    {
-        $newContTitulo = 'Job '.$contTitulo;
+class Job extends Model {
 
-        parent::__construct($newContTitulo, $contDescripcion);
-    }
 
+    protected $table = 'jobs';
     
-    public function obtenerTitulo() {
-
-        return $this->titulo;
-
-    }
-
-    public function obtenerDescripcion() {
-
-        return $this->descripcion;
-
-    }
-
+  
 
 }
 
