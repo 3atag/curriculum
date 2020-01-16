@@ -12,7 +12,7 @@ use App\Models\Job;
 // Creamos un objeto clase Capsule
 $capsule = new Capsule;
 
-// Configuramos el metodo addConnection del objeto creado con los datos de acceso a la base de datos
+// Configuramos el acceso a la base de datos, es decir: el metodo addConnection del objeto creado con los datos de acceso a la base de datos
 $capsule->addConnection([
   'driver'    => 'mysql',
   'host'      => 'localhost',
@@ -24,19 +24,26 @@ $capsule->addConnection([
   'prefix'    => '',
 ]);
 
+
+
 // Hacemos que la instancia de Capsule esté disponible globalmente a través de métodos estáticos ... (opcional)
 $capsule->setAsGlobal();
 
 // Inicializar Eloquent ORM... (opcional; a no ser que se haya usado setEventDispatcher())
 $capsule->bootEloquent();
 
+
+
+// Si el formulario fue enviado
 if (!empty($_POST)) {
-
+  // Creo una nueva instancia de la clase Job
   $job = new Job;
+  // Agrego al atributo title (notar que es el mismo nombre que el campo de la tabla jobs en la BD) el valor del titulo que llega desde el formulario
   $job->title = $_POST['title'];
+  // Agrego al atributo description (notar que es el mismo nombre que el campo de la tabla jobs en la BD) el valor de la descripcion que llega desde el formulario
   $job->description = $_POST['description'];
+  // invocamos el metodo save para guardar los datos en la base.
   $job->save();
-
 }
 
 
