@@ -1,12 +1,18 @@
 <?php
 
+// Agregamos archivo autoload
 require_once 'vendor/autoload.php';
 
+// Traemos la clase Manager de Elocuent como Capsule
 use Illuminate\Database\Capsule\Manager as Capsule;
+
+// Traemos la clase Job
 use App\Models\Job;
 
+// Creamos un objeto clase Capsule
 $capsule = new Capsule;
 
+// Configuramos el metodo addConnection del objeto creado con los datos de acceso a la base de datos
 $capsule->addConnection([
   'driver'    => 'mysql',
   'host'      => 'localhost',
@@ -18,10 +24,10 @@ $capsule->addConnection([
   'prefix'    => '',
 ]);
 
-// Make this Capsule instance available globally via static methods... (optional)
+// Hacemos que la instancia de Capsule esté disponible globalmente a través de métodos estáticos ... (opcional)
 $capsule->setAsGlobal();
 
-// Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
+// Inicializar Eloquent ORM... (opcional; a no ser que se haya usado setEventDispatcher())
 $capsule->bootEloquent();
 
 if (!empty($_POST)) {
