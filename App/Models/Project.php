@@ -2,20 +2,12 @@
 
 namespace App\Models;
 
-class Project extends BaseElement implements Printable {
+use Illuminate\Database\Eloquent\Model;
 
-    public function obtenerTitulo() {
+class Project extends Model {
 
-        return $this->titulo;
+    protected $table = 'projects';      
 
-    }
-
-    public function obtenerDescripcion() {
-
-        return $this->descripcion;
-
-    }
 }
-
 
 ?>

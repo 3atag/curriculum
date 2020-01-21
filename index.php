@@ -1,40 +1,11 @@
 <?php
 
-// Agregamos archivo autoload
-require_once 'vendor/autoload.php';
-
-// Traemos la clase Manager de Elocuent como Capsule
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 // Traemos la clase Job
-use App\Models\Job;
-
-// Creamos un objeto clase Capsule
-$capsule = new Capsule;
-
-// Configuramos el acceso a la base de datos, es decir: el metodo addConnection del objeto creado con los datos de acceso a la base de datos
-$capsule->addConnection([
-  'driver'    => 'mysql',
-  'host'      => 'localhost',
-  'database'  => 'curriculum',
-  'username'  => 'root',
-  'password'  => '',
-  'charset'   => 'utf8',
-  'collation' => 'utf8_unicode_ci',
-  'prefix'    => '',
-]);
-
-
-
-// Hacemos que la instancia de Capsule esté disponible globalmente a través de métodos estáticos ... (opcional)
-$capsule->setAsGlobal();
-
-// Inicializar Eloquent ORM... (opcional; a no ser que se haya usado setEventDispatcher())
-$capsule->bootEloquent();
-
-
+use App\Models\{Job,Project};
 
 require_once('jobs.php');
+require_once('projects.php');
 
 $name = 'Juan Pintos';
 
@@ -53,7 +24,7 @@ $limitMonths = 2000;
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
     crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
 
   <title>Resume</title>
 </head>
@@ -62,7 +33,7 @@ $limitMonths = 2000;
   <div class="container">
     <div id="resume-header" class="row">
       <div class="col-3">
-        <img id="profile-picture" src="juancito.jpg" alt="">
+        <img id="profile-picture" src="../juancito.jpg" alt="">
       </div>
       <div class="col">
         <h1><?php echo $name; ?></h1>
@@ -98,7 +69,7 @@ $limitMonths = 2000;
                 break;
               }
 
-              imprimirElementos($jobs[$i]);
+              imprimirJobs($jobs[$i]);
             }
             ?>
           </ul>
@@ -109,7 +80,7 @@ $limitMonths = 2000;
             <?php
             for($i = 0; $i < count($projects); $i++) {
 
-              imprimirElementos($projects[$i]);
+              imprimirProjects($projects[$i]);
 
             }
             ?>           

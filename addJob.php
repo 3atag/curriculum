@@ -1,38 +1,7 @@
 <?php
 
-// Agregamos archivo autoload
-require_once 'vendor/autoload.php';
-
-// Traemos la clase Manager de Elocuent como Capsule
-use Illuminate\Database\Capsule\Manager as Capsule;
-
 // Traemos la clase Job
 use App\Models\Job;
-
-// Creamos un objeto clase Capsule
-$capsule = new Capsule;
-
-// Configuramos el acceso a la base de datos, es decir: el metodo addConnection del objeto creado con los datos de acceso a la base de datos
-$capsule->addConnection([
-  'driver'    => 'mysql',
-  'host'      => 'localhost',
-  'database'  => 'curriculum',
-  'username'  => 'root',
-  'password'  => '',
-  'charset'   => 'utf8',
-  'collation' => 'utf8_unicode_ci',
-  'prefix'    => '',
-]);
-
-
-
-// Hacemos que la instancia de Capsule esté disponible globalmente a través de métodos estáticos ... (opcional)
-$capsule->setAsGlobal();
-
-// Inicializar Eloquent ORM... (opcional; a no ser que se haya usado setEventDispatcher())
-$capsule->bootEloquent();
-
-
 
 // Si el formulario fue enviado
 if (!empty($_POST)) {

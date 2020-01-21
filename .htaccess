@@ -1,0 +1,9 @@
+
+# Habilitamos el motor de rewrite
+RewriteEngine On
+# Condicion de reescritura. si ya estamos en la carpeta public con algo, ya no queremos que haga otro redireccionamiento
+RewriteCond %{THE_REQUEST} /public/([^\s?]*) [NC]
+# Agregamos reglas de redireccion: cuando encuentre el request queremos que nos lo redireccione a 301 (puclic)
+RewriteRule ^ %1 [L,NE,R=301]
+# Agregamos otra regla: Cuando encuentre cualquier cosa lo mande a public
+RewriteRule ^((?!public/).*) public/$1 [L,NC]
