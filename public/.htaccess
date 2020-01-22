@@ -1,10 +1,10 @@
-# Habilitamos el motor de rewrite
-RewriteEngine On
-# Si el recurso que estamos pidiendo no es un directorio
-RewriteCond %{REQUEST_FILENAME} !-d
+# # Habilitamos el motor de rewrite
+# RewriteEngine On
+# # Si el recurso que estamos pidiendo no es un directorio
+# RewriteCond %{REQUEST_FILENAME} !-d
 
-# Si el recurso que estamos pidiendo no es un archivo
-RewriteCond %{REQUEST_FILENAME} !-f
+# # Si el recurso que estamos pidiendo no es un archivo
+# RewriteCond %{REQUEST_FILENAME} !-f
 
-# Si el recurso no es un directorio y no es un archivo, redirecciona a index.php
-RewriteRule ^ index.php [QSA,L]
+# # Si el recurso no es un directorio y no es un archivo, redirecciona a index.php
+# RewriteRule ^ index.php [QSA,L]

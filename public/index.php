@@ -33,6 +33,7 @@ $capsule->setAsGlobal();
 // Inicializar Eloquent ORM... (opcional; a no ser que se haya usado setEventDispatcher())
 $capsule->bootEloquent();
 
+// Creamos un objeto diactoros que contenga a todas las superglobales
 $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER,
     $_GET,
@@ -41,4 +42,5 @@ $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
     $_FILES
 );
 
-var_dump($request->getUri()->getPath());
+// Mostramos en el navegador a modo de ejemplo como se ve la el path (ruta) del recurso
+var_dump('holaaa'.$request->getUri()->getPath());
