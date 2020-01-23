@@ -12,6 +12,9 @@ require_once '../vendor/autoload.php';
 // Traemos la clase Manager de Elocuent como Capsule
 use Illuminate\Database\Capsule\Manager as Capsule;
 
+// Traemos la clase RouterContainer
+use Aura\Router\RouterContainer;
+
 // Creamos un objeto clase Capsule
 $capsule = new Capsule;
 
@@ -41,6 +44,27 @@ $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
     $_COOKIE,
     $_FILES
 );
+// Creo un contenedor de rutas (objeto de la clase Aura/Router)
+$routerContainer = new RouterContainer();
 
-// Mostramos en el navegador a modo de ejemplo como se ve la el path (ruta) del recurso
-var_dump('holaaa'.$request->getUri()->getPath());
+// Creamos el mapa de ruta
+$map = $routerContainer->getMap();
+
+
+$map->get('index', '/curriculum/','../index.php');
+
+$map->get('addJobs', '/curriculum/jobs/add','../addJob.php');
+
+$matcher = $routerContainer->getMatcher();
+
+$route = $matcher->match($request);
+
+if(!$route){
+
+  echo 'No route';
+
+} else {
+
+  require $route->handler;
+
+}
