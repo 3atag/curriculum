@@ -1,23 +1,3 @@
-<?php
-
-// Traemos la clase Job
-use App\Models\Job;
-
-// Si el formulario fue enviado
-if (!empty($_POST)) {
-  // Creo una nueva instancia de la clase Job
-  $job = new Job;
-  // Agrego al atributo title (notar que es el mismo nombre que el campo de la tabla jobs en la BD) el valor del titulo que llega desde el formulario
-  $job->title = $_POST['title'];
-  // Agrego al atributo description (notar que es el mismo nombre que el campo de la tabla jobs en la BD) el valor de la descripcion que llega desde el formulario
-  $job->description = $_POST['description'];
-  // invocamos el metodo save para guardar los datos en la base.
-  $job->save();
-}
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +15,7 @@ if (!empty($_POST)) {
 
 <body>
   <h1>Agregar Job</h1>
-  <form action="addJob.php" method="POST">
+  <form action="/curriculum/jobs/add" method="POST">
     <label for="title">Titulo</label>
     <input type="title" id="title" name="title"> <br />
 

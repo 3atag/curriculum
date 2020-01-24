@@ -1,18 +1,3 @@
-<?php
-
-
-// Traemos la clase Job
-use App\Models\{Job,Project};
-
-require_once('jobs.php');
-require_once('projects.php');
-
-$name = 'Juan Pintos';
-
-$limitMonths = 2000;
-
-?>
-
 <!doctype html>
 <html lang="es">
 
@@ -24,7 +9,7 @@ $limitMonths = 2000;
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
     crossorigin="anonymous">
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="style.css">
 
   <title>Resume</title>
 </head>
@@ -33,7 +18,7 @@ $limitMonths = 2000;
   <div class="container">
     <div id="resume-header" class="row">
       <div class="col-3">
-        <img id="profile-picture" src="../juancito.jpg" alt="">
+        <img id="profile-picture" src="juancito.jpg" alt="">
       </div>
       <div class="col">
         <h1><?php echo $name; ?></h1>
