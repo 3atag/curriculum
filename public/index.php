@@ -1,13 +1,10 @@
 <?php
 
-// En Xampp el sistema de errores viene activo por defecto, pero en otros servidores puede no estar acitvo. Con estos codigos podemos visualizar los errores en pantalla. SOLO USAR EN DESARROLLO
-
-ini_set('display_errors', 1);
-ini_set('display_starup_errors', 1);
-error_reporting(E_ALL);
-
 // Agregamos archivo autoload
 require_once '../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
 
 // Traemos la clase Manager de Elocuent como Capsule
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -15,20 +12,23 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 // Traemos la clase RouterContainer
 use Aura\Router\RouterContainer;
 
+
+
 // Creamos un objeto clase Capsule
 $capsule = new Capsule;
 
 // Configuramos el acceso a la base de datos, es decir: el metodo addConnection del objeto creado con los datos de acceso a la base de datos
 $capsule->addConnection([
   'driver'    => 'mysql',
-  'host'      => 'localhost',
-  'database'  => 'curriculum',
-  'username'  => 'root',
-  'password'  => '',
+  'host'      => $_ENV['DB_HOST'],
+  'database'  => $_ENV['DB_NAME'],
+  'username'  => $_ENV['DB_USER'],
+  'password'  => $_ENV['DB_PASS'],
   'charset'   => 'utf8',
   'collation' => 'utf8_unicode_ci',
   'prefix'    => '',
 ]);
+
 
 // Hacemos que la instancia de Capsule esté disponible globalmente a través de métodos estáticos ... (opcional)
 $capsule->setAsGlobal();
@@ -51,17 +51,17 @@ $routerContainer = new RouterContainer();
 $map = $routerContainer->getMap();
 
 // En el router podemos guardar un array asociativo con la ruta de la clase y el metodo como handler
-$map->get('index', '/curriculum/',[
+$map->get('index', '/',[
   'controller'=>'App\Controllers\IndexController',
   'action'=>'indexAccion'
 ]);
 
-$map->get('addJobs', '/curriculum/jobs/add',[
+$map->get('addJobs', '/jobs/add',[
   'controller'=>'App\Controllers\JobsController',
   'action'=>'postAddJobAction'
 ]);
 
-$map->post('saveJobs', '/curriculum/jobs/add',[
+$map->post('saveJobs', '/jobs/add',[
   'controller'=>'App\Controllers\JobsController',
   'action'=>'postAddJobAction'
 ]);
@@ -91,49 +91,49 @@ if(!$route){
 
 }
 
-
-function imprimirJobs($elemento)
-{
-
-  // if ($elemento->visible == false) {
-  //     return;
-  // }
-
-  echo '
-    <ul>
-            <li class="work-position">
-              <h5>' . $elemento->title . '</h5>
-              <p>' . $elemento->description . '</p>
-              <strong>Achievements:</strong>
-              <ul>
-                <li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>
-                <li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>
-                <li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>
-              </ul>
-            </li>
-           
-          </ul>';
-}
-
-function imprimirProjects($elemento) {
-
-  // if ($elemento->visible == false) {
-  //     return;
-  // }
-
-  echo '<div class="project">
-<h5>'.$elemento->title.'</h5>
-<div class="row">
-    <div class="col-3">
-        <img id="profile-picture" src="https://ui-avatars.com/api/?name=John+Doe&size=255" alt="">
-      </div>
-      <div class="col">
-        <p>'.$elemento->description.'</p>
-        <strong>Technologies used:</strong>
-        <span class="badge badge-secondary">PHP</span>
-        <span class="badge badge-secondary">HTML</span>
-        <span class="badge badge-secondary">CSS</span>
-      </div>
-</div>
-</div>';
-}
+//
+//function imprimirJobs($elemento)
+//{
+//
+//  // if ($elemento->visible == false) {
+//  //     return;
+//  // }
+//
+//  echo '
+//    <ul>
+//            <li class="work-position">
+//              <h5>' . $elemento->title . '</h5>
+//              <p>' . $elemento->description . '</p>
+//              <strong>Achievements:</strong>
+//              <ul>
+//                <li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>
+//                <li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>
+//                <li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>
+//              </ul>
+//            </li>
+//
+//          </ul>';
+//}
+//
+//function imprimirProjects($elemento) {
+//
+//  // if ($elemento->visible == false) {
+//  //     return;
+//  // }
+//
+//  echo '<div class="project">
+//<h5>'.$elemento->title.'</h5>
+//<div class="row">
+//    <div class="col-3">
+//        <img id="profile-picture" src="https://ui-avatars.com/api/?name=John+Doe&size=255" alt="">
+//      </div>
+//      <div class="col">
+//        <p>'.$elemento->description.'</p>
+//        <strong>Technologies used:</strong>
+//        <span class="badge badge-secondary">PHP</span>
+//        <span class="badge badge-secondary">HTML</span>
+//        <span class="badge badge-secondary">CSS</span>
+//      </div>
+//</div>
+//</div>';
+//}
