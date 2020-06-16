@@ -6,5 +6,5 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # Si el archivo que estan pidiendo no es un archivo
 RewriteCond %{REQUEST_FILENAME} !-f
 
-# Entonces si se cumplen las dos condiciones de arriba redirecciona a index.php
+# Entonces si se cumplen las dos condiciones de arriba redirecciona a index.twig
 RewriteRule ^ index.php [QSA,L]

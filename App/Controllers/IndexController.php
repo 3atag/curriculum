@@ -4,23 +4,20 @@ namespace App\Controllers;
 
 use App\Models\{Job, Project};
 
-class IndexController
+class IndexController extends BaseController
 {
 
+    /***** Mostrar todos los registros *****/
     public function indexAccion()
     {
+        $jobs = Job::select('title', 'description')->get();
+        $proyectos = Project::select('title', 'description')->get();
 
-        $name = 'Juan Pintos';
-
-        $limitMonths = 2000;
-
-        // Tremos todos los registros que Elocuent encuentre en el modelo Job
-        $jobs = Job::all();
-
-        // Tremos todos los registros que Elocuent encuentre en el modelo Job
-        $projects = Project::all();
-
-        include '../views/index.php';
+        return $this->renderHTML('addJob.twig', [
+            'jobs' => $jobs,
+            'proyects' => $proyectos,
+            'name' => 'Juan Pintos'
+        ]);
+    }
 
     }
-}

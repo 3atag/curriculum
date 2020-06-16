@@ -6,7 +6,6 @@ use App\Models\Job;
 
 class JobsController
 {
-
     public function postAddJobAction($request)
     {
 
@@ -24,7 +23,7 @@ class JobsController
             $job->save();
         }
 
-        include '../views/addJob.php';
+        include '../views/addJob.twig';
 
     }
 }
