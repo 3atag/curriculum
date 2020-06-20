@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use Laminas\Diactoros\Response\HtmlResponse;
+
 
 class BaseController
 {
@@ -20,9 +22,10 @@ class BaseController
 
     }
 
-    public function renderHTML($fileName, $data = []){
+    public function renderHTML($fileName, $data = [])
+    {
 
-        return $this->templateEngine->render($fileName,$data);
+        return new HtmlResponse($this->templateEngine->render($fileName, $data));
     }
 
 }

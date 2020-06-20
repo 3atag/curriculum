@@ -1,0 +1,55 @@
+{% extends "layout.twig" %}
+
+
+{% block content %}
+
+
+    <div class="principal">
+
+        <div class="contenedor_formulario">
+
+            <h4>Agregar Proyecto</h4>
+
+            {% if responseMessage %}
+                <div class="alert alert-primary" role="alert">
+
+                    {{ responseMessage }}
+
+                </div>
+            {% endif %}
+
+
+            <form action="save" method="post">
+
+                <div class="form-group">
+                    <label>Titulo</label>
+                    <input type="text" name="titulo" id="titulo" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Descripción</label>
+                    <textarea name="descripcion" id="descripcion" class="form-control">
+                    </textarea>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="url">URL</label>
+                    <input type="text" name="url" id="url" class="form-control">
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" value="Agregar" class="btn btn-primary">
+
+                    <a href="/usuarios">
+                        <button type="button" class="btn btn-secondary">Cancelar</button>
+                    </a>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

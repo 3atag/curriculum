@@ -56,18 +56,26 @@ $map->get('index', '/',[
   'action'=>'indexAccion'
 ]);
 
-$map->get('addJobs', '/jobs/add',[
-  'controller'=>'App\Controllers\JobsController',
-  'action'=>'postAddJobAction'
+$map->get('login', '/login',[
+    'controller'=>'App\Controllers\AuthController',
+    'action'=>'getLogin'
 ]);
 
-$map->post('saveJobs', '/jobs/add',[
-  'controller'=>'App\Controllers\JobsController',
-  'action'=>'postAddJobAction'
+$map->get('addProyecto', '/proyectos/add',[
+  'controller'=> 'App\Controllers\ProyectoController',
+  'action'=>'postAddProyectoAction'
+]);
+
+$map->post('saveProyecto', '/proyectos/save',[
+    'controller'=> 'App\Controllers\ProyectoController',
+    'action'=>'postSaveProyectoAction'
 ]);
 
 
+
+// El matcher es un objeto que compara lo que tenemos en el request con lo que seteamos en nuestro mapa de rutas
 $matcher = $routerContainer->getMatcher();
+
 
 $route = $matcher->match($request);
 
@@ -87,53 +95,10 @@ if(!$route){
   $controller = new $controllerName;
 
   // invocamos el metodo del controlador con el request, que el un objeto Diactoros con todo el contenido normalizado de las superglobales
-  $controller->$actionName($request);
+  $response = $controller->$actionName($request);
+
+  echo $response->getBody();
 
 }
 
-//
-//function imprimirJobs($elemento)
-//{
-//
-//  // if ($elemento->visible == false) {
-//  //     return;
-//  // }
-//
-//  echo '
-//    <ul>
-//            <li class="work-position">
-//              <h5>' . $elemento->title . '</h5>
-//              <p>' . $elemento->description . '</p>
-//              <strong>Achievements:</strong>
-//              <ul>
-//                <li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>
-//                <li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>
-//                <li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>
-//              </ul>
-//            </li>
-//
-//          </ul>';
-//}
-//
-//function imprimirProjects($elemento) {
-//
-//  // if ($elemento->visible == false) {
-//  //     return;
-//  // }
-//
-//  echo '<div class="project">
-//<h5>'.$elemento->title.'</h5>
-//<div class="row">
-//    <div class="col-3">
-//        <img id="profile-picture" src="https://ui-avatars.com/api/?name=John+Doe&size=255" alt="">
-//      </div>
-//      <div class="col">
-//        <p>'.$elemento->description.'</p>
-//        <strong>Technologies used:</strong>
-//        <span class="badge badge-secondary">PHP</span>
-//        <span class="badge badge-secondary">HTML</span>
-//        <span class="badge badge-secondary">CSS</span>
-//      </div>
-//</div>
-//</div>';
-//}
+

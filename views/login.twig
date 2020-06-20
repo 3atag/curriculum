@@ -1,0 +1,56 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+<div class="principal">
+    <div class="card formLogin" style="width: 22rem;">
+        <article class="card-body">
+            <h4 class="card-title text-center mb-4 mt-1">Acceder</h4>
+            <hr>
+
+            <div class="alert alert-primary" role="alert">
+
+
+            </div>
+
+
+            <form action="auth" method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+							<span class="input-group-text">
+								<i class="fa fa-user"></i>
+							</span>
+                        </div>
+                        <input type="text" name="email" id="email" class="form-control" placeholder="Email">
+                    </div>
+                    <!-- input-group.// -->
+                </div>
+                <!-- form-group// -->
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+							<span class="input-group-text">
+								<i class="fa fa-lock"></i>
+							</span>
+                        </div>
+                        <input type="password" name="clave" id="clave" class="form-control" placeholder="Contraseña">
+                    </div>
+                    <!-- input-group.// -->
+                </div>
+                <!-- form-group// -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Acceder
+                    </button>
+                </div>
+                <!-- form-group// -->
+
+            </form>
+        </article>
+    </div>
+    <!-- card.// -->
+</div>
+
+
+
+{% endblock %}

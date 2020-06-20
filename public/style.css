@@ -1,3 +1,35 @@
+h1 {
+    font-family: "Roboto Black";
+    margin-bottom: .1rem;
+}
+
+ul.datosPersonales {
+    padding-left: 1.3rem !important;
+    padding-bottom: .5rem;
+    margin-bottom: .1rem;
+   border-bottom: grey solid 1px;
+}
+
+ul.datosPersonales li {
+    list-style: none;
+    line-height: 2;
+    display: flex;
+    align-items: center;
+}
+
+ul.datosPersonales li i {
+    margin-right: .4rem;
+}
+
+div.contenedorRedes {
+    padding-left: 1rem;
+}
+
+div.contenedorRedes a {
+    color: grey;
+    margin-right: .5rem;
+    text-decoration: none;
+}
 #resume-header {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -24,3 +56,12 @@
 .project {
     margin-bottom: 40px;
 }
+
+div.principal {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+div.formLogin {
+
