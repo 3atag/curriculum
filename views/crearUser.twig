@@ -1,0 +1,70 @@
+{% extends "adminLayout.twig" %}
+
+{% block contentAdmin %}
+
+    <div class="principal">
+
+        <div class="contenedor_formulario">
+
+            <h4>Crear Usuario</h4>
+
+            {% if responseMessage %}
+                <div class="alert alert-primary" role="alert">
+
+                    {{ responseMessage }}
+
+                </div>
+            {% endif %}
+
+
+            <form action="save" method="post">
+
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" name="nombre" id="nombre" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" name="apellido" id="apellido" class="form-control">
+                    </input>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="apellido">Clave</label>
+                <input type="password" name="clave" id="clave" class="form-control" placeholder="Contraseña">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Telefono</label>
+                    <input type="text" name="telefono" id="telefono" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Resumen</label>
+                    <textarea name="resumen" id="resumen" class="form-control">
+                    </textarea>
+
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" value="Crear" class="btn btn-primary">
+
+                    <a href="/admin">
+                        <button type="button" class="btn btn-secondary">Cancelar</button>
+                    </a>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

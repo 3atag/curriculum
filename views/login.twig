@@ -7,18 +7,20 @@
             <h4 class="card-title text-center mb-4 mt-1">Acceder</h4>
             <hr>
 
+            {% if responseMessage %}
             <div class="alert alert-primary" role="alert">
 
+                {{ responseMessage }}
 
             </div>
-
+            {% endif %}
 
             <form action="auth" method="post">
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-prepend">
 							<span class="input-group-text">
-								<i class="fa fa-user"></i>
+								<i class="ri-user-line"></i>
 							</span>
                         </div>
                         <input type="text" name="email" id="email" class="form-control" placeholder="Email">
@@ -30,7 +32,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
 							<span class="input-group-text">
-								<i class="fa fa-lock"></i>
+								<i class="ri-lock-line"></i>
 							</span>
                         </div>
                         <input type="password" name="clave" id="clave" class="form-control" placeholder="Contraseña">

@@ -60,8 +60,31 @@ div.contenedorRedes a {
 div.principal {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
+}
+
+
+div.contenedor_formulario {
+    margin-top: 4rem;
+    width: 40rem;
+}
+
+div.contenedor_experiencias {
+    display: flex;
+}
+
+div.contenedor_experiencias div {
+    width: auto;
+}
+
+div.contenedor_experiencias div.textos {
+    margin-left: 1.2rem;
 }
 
 div.formLogin {
+    margin-top: 6rem;
+}
 
+div.contenedorAdmin {
+    margin-top: 5rem;
+    text-align: center;
+}

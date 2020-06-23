@@ -43,19 +43,23 @@
         <div class="col">
             <div>
                 <h3 class="border-bottom-gray" >Experiencia Laboral</h3>
-                <ul>
+
 
                     {% for experiencia in experiencias %}
+                        <div class="contenedor_experiencias">
+                            <div>
+                                <img class="logo_empresa" src="uploads/{{ experiencia.logoEmpresa }}" alt="">
+                            </div>
 
-                        <li>
-                            <h5>{{ experiencia.puesto }} | {{ experiencia.empresa }}</h5>
-                            <p>{{ experiencia.resumen }}</p>
-                        </li>
+                            <div class="textos">
+                                <h5>{{ experiencia.puesto }} | {{ experiencia.empresa }}</h5>
+                                <p>{{ experiencia.resumen }}</p>
+                            </div>
 
+                        </div>
 
                     {% endfor %}
 
-                </ul>
             </div>
             <div>
                 <h3 class="border-bottom-gray">Proyectos</h3>

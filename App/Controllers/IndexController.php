@@ -10,7 +10,7 @@ class IndexController extends BaseController
     /***** Mostrar todos los registros *****/
     public function indexAccion()
     {
-        $experiencias = Experiencia::select('puesto', 'empresa', 'resumen')->get();
+        $experiencias = Experiencia::select('puesto', 'empresa', 'logoEmpresa', 'resumen')->get();
         $projects = Project::select('title', 'description','url')->get();
         $usuario = User::select('firstName', 'lastName', 'email', 'phoneCell', 'resumen')
             ->where('activo', '=', 1)

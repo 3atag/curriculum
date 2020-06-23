@@ -6,7 +6,7 @@
 
         <div class="contenedor_formulario">
 
-            <h4>Agregar Proyecto</h4>
+            <h4>Agregar Experiencia</h4>
 
             {% if responseMessage %}
                 <div class="alert alert-primary" role="alert">
@@ -17,23 +17,29 @@
             {% endif %}
 
 
-            <form action="save" method="post">
+            <form action="save" method="post" enctype="multipart/form-data">
 
                 <div class="form-group">
-                    <label>Titulo</label>
-                    <input type="text" name="titulo" id="titulo" class="form-control">
+                    <label for="puesto">Puesto</label>
+                    <input type="text" name="puesto" id="puesto" class="form-control">
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Descripción</label>
-                    <textarea name="descripcion" id="descripcion" class="form-control">
+                    <label for="empresa">Empresa</label>
+                    <input type="text" name="empresa" id="empresa" class="form-control">
+
+                </div>
+
+                <div class="form-group">
+                    <label for="logo_empresa">Logo de empresa</label>
+                    <input type="file" name="logo_empresa" id="logo_empresa" class="form-control">
+
+                </div>
+
+                <div class="form-group">
+                    <label for="resumen">Resumen</label>
+                    <textarea name="resumen" id="resumen" class="form-control">
                     </textarea>
-
-                </div>
-
-                <div class="form-group">
-                    <label for="url">URL</label>
-                    <input type="text" name="url" id="url" class="form-control">
                 </div>
 
 
