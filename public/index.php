@@ -26,7 +26,7 @@ $capsule = new Capsule;
 
 // Configuramos el acceso a la base de datos, es decir: el metodo addConnection del objeto creado con los datos de acceso a la base de datos
 $capsule->addConnection([
-  'driver'    => 'mysql',
+  'driver'    => $_ENV['DB_DRIVER'],
   'host'      => $_ENV['DB_HOST'],
   'database'  => $_ENV['DB_NAME'],
   'username'  => $_ENV['DB_USER'],
