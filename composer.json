@@ -6,6 +6,7 @@
     },
     
     "require":{
+        "php": "^7.2.0",
         "illuminate/database": "^6.10",
         "laminas/laminas-diactoros": "^2.2",
         "aura/router": "^3.1",
