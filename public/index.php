@@ -5,8 +5,10 @@ require_once '../vendor/autoload.php';
 
 session_start();
 
+if(file_exists("../.env")){
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
+}
 
 // Traemos la clase Manager de Elocuent como Capsule
 use Illuminate\Database\Capsule\Manager as Capsule;
