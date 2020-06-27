@@ -1,0 +1,41 @@
+{% extends "adminLayout.twig" %}
+
+{% block contentAdmin %}
+
+    <div>
+
+        <div>
+
+            <h4>Experiencias</h4>
+
+            {% if responseMessage %}
+                <div class="alert alert-primary" role="alert">
+
+                    {{ responseMessage }}
+
+                </div>
+            {% endif %}
+
+
+        <table class="table">
+            <tr>
+                <th>Experiencias</th>
+                <th></th>
+            </tr>
+
+            {% for experiencia in experiencias %}
+                <tr>
+                <td>{{ experiencia.puesto }}</td>
+                    {% if experiencia.deleted_at == '' %}
+                        <td><a href="/experiencias/delete?id={{ experiencia.id }}"><i class="ri-delete-bin-6-line"></i></a></td>
+                    {% else %}
+                        <td><a href="/experiencias/undelete?id={{ experiencia.id }}"><i class="ri-check-line"></i></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+
+        </table>
+        </div>
+    </div>
+
+{% endblock %}

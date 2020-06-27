@@ -5,11 +5,25 @@ namespace App\Controllers;
 use App\Models\Experiencia;
 use App\Models\Project;
 
+use App\Services\ExprerienciaService;
+use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
 
 
 class ExperienciaController extends BaseController
 {
+    private $experienciaService;
+
+    public function __construct(ExprerienciaService $experienciaService)
+    {
+        parent::__construct();
+
+        $this->experienciaService = $experienciaService;
+
+    }
+
+
     /***** Mostrar formulario agregar registro *****/
     public function postAddExperienciaAction()
     {
@@ -34,13 +48,22 @@ class ExperienciaController extends BaseController
 
             try {
                 $experienciaValidator->assert($postData);
+
                 $files = $request->getUploadedFiles();
+
                 $logo = $files['logo_empresa'];
 
+                if (!$logo->getClientFilename()) {
+
+                    $fileName = '';
+                }
+
                 if ($logo->getError() == UPLOAD_ERR_OK) {
-                    $fileName = $logo->getClientFilename();
+                    $filePath = "uploads/";
+                    $fileName = $filePath . $logo->getClientFilename();
                     $logo->moveTo("uploads/$fileName");
                 }
+
                 $experiencia = new Experiencia();
 
                 $experiencia->puesto = $postData['puesto'];
@@ -52,6 +75,7 @@ class ExperienciaController extends BaseController
 
                 $responseMessage = 'Experiencia agregada con éxito';
 
+
             } catch (\Exception $e) {
 
                 $responseMessage = $e->getMessage();
@@ -62,5 +86,38 @@ class ExperienciaController extends BaseController
         return $this->renderHTML('crearExperiencia.twig', [
             'responseMessage' => $responseMessage
         ]);
+    }
+
+    /***** Index *****/
+    public function indexAction()
+    {
+
+        $experiencias = Experiencia::withTrashed()->get();
+
+        return $this->renderHTML('experiencias/index.twig', compact('experiencias'));
+
+    }
+
+    /***** Borrar registro (soft delete) *****/
+    public function deleteAction(ServerRequest $request)
+    {
+        $params = $request->getQueryParams();
+
+        $this->experienciaService->deleteExperiencia($params['id']);
+
+        return new RedirectResponse('/experiencias');
+
+    }
+
+    /***** Reactivar registro *****/
+    public function undeleteAction(ServerRequest $request)
+    {
+        $params = $request->getQueryParams();
+        $experiencia = Experiencia::withTrashed()
+            ->where('id', $params['id'])
+            ->restore();
+
+        return new RedirectResponse('/experiencias');
+
     }
 }

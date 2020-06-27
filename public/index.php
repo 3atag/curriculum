@@ -102,6 +102,12 @@ $map->post('saveUsuario', '/usuarios/save',[
 
 
 /************* EXPERIENCIAS *****************/
+$map->get('indexExperiencia', '/experiencias',[
+    'controller'=> 'App\Controllers\ExperienciaController',
+    'action'=>'indexAction',
+    'auth' => true
+]);
+
 $map->get('addExperiencia', '/experiencias/add',[
     'controller'=> 'App\Controllers\ExperienciaController',
     'action'=>'postAddExperienciaAction',
@@ -114,6 +120,17 @@ $map->post('saveExperiencia', '/experiencias/save',[
     'auth' => true
 ]);
 
+$map->get('deleteExperiencia', '/experiencias/delete',[
+    'controller'=> 'App\Controllers\ExperienciaController',
+    'action'=>'deleteAction',
+    'auth' => true
+]);
+
+$map->get('undeleteExperiencia', '/experiencias/undelete',[
+    'controller'=> 'App\Controllers\ExperienciaController',
+    'action'=>'undeleteAction',
+    'auth' => true
+]);
 
 /************* PROYECTOS *****************/
 $map->get('addProyecto', '/proyectos/add',[

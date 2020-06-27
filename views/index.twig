@@ -48,7 +48,7 @@
                     {% for experiencia in experiencias %}
                         <div class="contenedor_experiencias">
                             <div>
-                                <img class="logo_empresa" src="uploads/{{ experiencia.logoEmpresa }}" alt="">
+                                <img class="logo_empresa" src="{{ experiencia.getImage(experiencia.puesto) }}" alt="">
                             </div>
 
                             <div class="textos">
