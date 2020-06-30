@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Experiencia;
 use App\Models\Project;
+use App\Services\ExperienciaService;
 
 use App\Services\ExprerienciaService;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -15,7 +16,7 @@ class ExperienciaController extends BaseController
 {
     private $experienciaService;
 
-    public function __construct(ExprerienciaService $experienciaService)
+    public function __construct(ExperienciaService $experienciaService)
     {
         parent::__construct();
 

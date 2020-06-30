@@ -5,9 +5,9 @@ require_once '../vendor/autoload.php';
 
 session_start();
 
-if(file_exists("../.env")){
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
-$dotenv->load();
+if (file_exists("../.env")) {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+    $dotenv->load();
 }
 
 // Traemos la clase Manager de Elocuent como Capsule
@@ -19,21 +19,24 @@ use Aura\Router\RouterContainer;
 // Traemos el estandar PSR7 de Diactores para manejar las respuestas y requerimientos HTTP
 use Laminas\Diactoros\Response\RedirectResponse;
 
+use App\Services\ExperienciaService;
 
+// Creamos el contenedor de dependencias
+$container = new DI\Container();
 
 // Creamos un objeto clase Capsule
 $capsule = new Capsule;
 
 // Configuramos el acceso a la base de datos, es decir: el metodo addConnection del objeto creado con los datos de acceso a la base de datos
 $capsule->addConnection([
-  'driver'    => $_ENV['DB_DRIVER'],
-  'host'      => $_ENV['DB_HOST'],
-  'database'  => $_ENV['DB_NAME'],
-  'username'  => $_ENV['DB_USER'],
-  'password'  => $_ENV['DB_PASS'],
-  'charset'   => 'utf8',
-  'collation' => 'utf8_unicode_ci',
-  'prefix'    => '',
+    'driver'    => $_ENV['DB_DRIVER'],
+    'host'      => $_ENV['DB_HOST'],
+    'database'  => $_ENV['DB_NAME'],
+    'username'  => $_ENV['DB_USER'],
+    'password'  => $_ENV['DB_PASS'],
+    'charset'   => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix'    => '',
 ]);
 
 
@@ -58,26 +61,26 @@ $routerContainer = new RouterContainer();
 $map = $routerContainer->getMap();
 
 // En el router podemos guardar un array asociativo con la ruta de la clase y el metodo como handler
-$map->get('index', '/',[
-  'controller'=>'App\Controllers\IndexController',
-  'action'=>'indexAccion'
+$map->get('index', '/', [
+    'controller' => 'App\Controllers\IndexController',
+    'action' => 'indexAccion'
 ]);
 
-$map->get('admin', '/admin',[
-    'controller'=>'App\Controllers\AdminController',
-    'action'=>'adminAction',
+$map->get('admin', '/admin', [
+    'controller' => 'App\Controllers\AdminController',
+    'action' => 'adminAction',
     'auth' => true
 ]);
 
 /******************* AUTH ********************/
-$map->get('login', '/login',[
-    'controller'=>'App\Controllers\AuthController',
-    'action'=>'getLogin'
+$map->get('login', '/login', [
+    'controller' => 'App\Controllers\AuthController',
+    'action' => 'getLogin'
 ]);
 
-$map->post('auth', '/auth',[
-    'controller'=>'App\Controllers\AuthController',
-    'action'=>'postLogin'
+$map->post('auth', '/auth', [
+    'controller' => 'App\Controllers\AuthController',
+    'action' => 'postLogin'
 ]);
 
 $map->get('logout', '/logout', [
@@ -88,60 +91,60 @@ $map->get('logout', '/logout', [
 
 /******************* USUARIOS ********************/
 
-$map->get('addUsuario', '/usuarios/add',[
-    'controller'=> 'App\Controllers\UserController',
-    'action'=>'getAddUserAction',
+$map->get('addUsuario', '/usuarios/add', [
+    'controller' => 'App\Controllers\UserController',
+    'action' => 'getAddUserAction',
     'auth' => true
 ]);
 
-$map->post('saveUsuario', '/usuarios/save',[
-    'controller'=> 'App\Controllers\UserController',
-    'action'=>'postSaveUsuarioAction',
+$map->post('saveUsuario', '/usuarios/save', [
+    'controller' => 'App\Controllers\UserController',
+    'action' => 'postSaveUsuarioAction',
     'auth' => true
 ]);
 
 
 /************* EXPERIENCIAS *****************/
-$map->get('indexExperiencia', '/experiencias',[
-    'controller'=> 'App\Controllers\ExperienciaController',
-    'action'=>'indexAction',
+$map->get('indexExperiencia', '/experiencias', [
+    'controller' => 'App\Controllers\ExperienciaController',
+    'action' => 'indexAction',
     'auth' => true
 ]);
 
-$map->get('addExperiencia', '/experiencias/add',[
-    'controller'=> 'App\Controllers\ExperienciaController',
-    'action'=>'postAddExperienciaAction',
+$map->get('addExperiencia', '/experiencias/add', [
+    'controller' => 'App\Controllers\ExperienciaController',
+    'action' => 'postAddExperienciaAction',
     'auth' => true
 ]);
 
-$map->post('saveExperiencia', '/experiencias/save',[
-    'controller'=> 'App\Controllers\ExperienciaController',
-    'action'=>'postSaveExperienciaAction',
+$map->post('saveExperiencia', '/experiencias/save', [
+    'controller' => 'App\Controllers\ExperienciaController',
+    'action' => 'postSaveExperienciaAction',
     'auth' => true
 ]);
 
-$map->get('deleteExperiencia', '/experiencias/delete',[
-    'controller'=> 'App\Controllers\ExperienciaController',
-    'action'=>'deleteAction',
+$map->get('deleteExperiencia', '/experiencias/delete', [
+    'controller' => 'App\Controllers\ExperienciaController',
+    'action' => 'deleteAction',
     'auth' => true
 ]);
 
-$map->get('undeleteExperiencia', '/experiencias/undelete',[
-    'controller'=> 'App\Controllers\ExperienciaController',
-    'action'=>'undeleteAction',
+$map->get('undeleteExperiencia', '/experiencias/undelete', [
+    'controller' => 'App\Controllers\ExperienciaController',
+    'action' => 'undeleteAction',
     'auth' => true
 ]);
 
 /************* PROYECTOS *****************/
-$map->get('addProyecto', '/proyectos/add',[
-  'controller'=> 'App\Controllers\ProyectoController',
-  'action'=>'postAddProyectoAction',
-  'auth' => true
+$map->get('addProyecto', '/proyectos/add', [
+    'controller' => 'App\Controllers\ProyectoController',
+    'action' => 'postAddProyectoAction',
+    'auth' => true
 ]);
 
-$map->post('saveProyecto', '/proyectos/save',[
-    'controller'=> 'App\Controllers\ProyectoController',
-    'action'=>'postSaveProyectoAction',
+$map->post('saveProyecto', '/proyectos/save', [
+    'controller' => 'App\Controllers\ProyectoController',
+    'action' => 'postSaveProyectoAction',
     'auth' => true
 ]);
 
@@ -152,24 +155,23 @@ $matcher = $routerContainer->getMatcher();
 
 $route = $matcher->match($request);
 
-if(!$route){
+if (!$route) {
 
-  echo 'No route';
-
+    echo 'No route';
 } else {
 
-  // Guardamos el array asociativo  en una variable
-  $handlerData = $route->handler;
+    // Guardamos el array asociativo  en una variable
+    $handlerData = $route->handler;
 
-  $controllerName = $handlerData['controller'];
-  $actionName = $handlerData['action'];
+    $controllerName = $handlerData['controller'];
+    $actionName = $handlerData['action'];
 
-  $needsAuth = $handlerData['auth'] ?? false;
+    $needsAuth = $handlerData['auth'] ?? false;
 
-  $sessionUserId = $_SESSION['userId'] ?? null;
+    $sessionUserId = $_SESSION['userId'] ?? null;
 
     if ($needsAuth && !$sessionUserId) {
-    // Si requiere autenticacion y el user id NO ESTA definido
+        // Si requiere autenticacion y el user id NO ESTA definido
 
         $response = new RedirectResponse('/login');
         // La respuesta redirige a login
@@ -178,23 +180,27 @@ if(!$route){
         // Si requiere autenticacion y el user id ESTA definido
 
         // usamos el valor del primer indice del array creado para cargar dinamicamente el nombre de la clase a instanciar
-        $controller = new $controllerName;
+//        if ($controllerName === 'App\Controllers\ExperienciaController') {
+//
+//            $controller = new $controllerName(new ExperienciaService());
+//
+//        } else {
+//            $controller = new $controllerName;
+//        }
+
+        $controller = $container->get($controllerName);
 
         // invocamos el metodo del controlador con el request, que el un objeto Diactoros con todo el contenido normalizado de las superglobales
         $response = $controller->$actionName($request);
-
     }
 
-  foreach ($response->getHeaders() as $name => $values) {
-      foreach ($values as $value) {
-          header(sprintf('%s: %s', $name, $value),false);
-      }
-  }
+    foreach ($response->getHeaders() as $name => $values) {
+        foreach ($values as $value) {
+            header(sprintf('%s: %s', $name, $value), false);
+        }
+    }
 
-  http_response_code($response->getStatusCode());
+    http_response_code($response->getStatusCode());
 
-  echo $response->getBody();
-
+    echo $response->getBody();
 }
-
-

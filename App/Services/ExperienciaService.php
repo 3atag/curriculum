@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Experiencia;
 
-class ExprerienciaService
+class ExperienciaService
 {
     public function deleteExperiencia($id)
     {
