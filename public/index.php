@@ -17,9 +17,20 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Aura\Router\RouterContainer;
 
 // Traemos el estandar PSR7 de Diactores para manejar las respuestas y requerimientos HTTP
+use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 
 use App\Services\ExperienciaService;
+use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use WoohooLabs\Harmony\Harmony;
+use WoohooLabs\Harmony\Middleware\DispatcherMiddleware;
+use WoohooLabs\Harmony\Middleware\LaminasEmitterMiddleware;
+
+// Creamos el canal de log
+$log = new Logger('name');
+$log->pushHandler(new StreamHandler(__DIR__ . '/../logs/app.log', Logger::WARNING));
 
 // Creamos el contenedor de dependencias
 $container = new DI\Container();
@@ -29,14 +40,14 @@ $capsule = new Capsule;
 
 // Configuramos el acceso a la base de datos, es decir: el metodo addConnection del objeto creado con los datos de acceso a la base de datos
 $capsule->addConnection([
-    'driver'    => $_ENV['DB_DRIVER'],
-    'host'      => $_ENV['DB_HOST'],
-    'database'  => $_ENV['DB_NAME'],
-    'username'  => $_ENV['DB_USER'],
-    'password'  => $_ENV['DB_PASS'],
-    'charset'   => 'utf8',
+    'driver' => $_ENV['DB_DRIVER'],
+    'host' => $_ENV['DB_HOST'],
+    'database' => $_ENV['DB_NAME'],
+    'username' => $_ENV['DB_USER'],
+    'password' => $_ENV['DB_PASS'],
+    'charset' => 'utf8',
     'collation' => 'utf8_unicode_ci',
-    'prefix'    => '',
+    'prefix' => '',
 ]);
 
 
@@ -62,92 +73,80 @@ $map = $routerContainer->getMap();
 
 // En el router podemos guardar un array asociativo con la ruta de la clase y el metodo como handler
 $map->get('index', '/', [
-    'controller' => 'App\Controllers\IndexController',
-    'action' => 'indexAccion'
+    'App\Controllers\IndexController',
+    'indexAccion'
 ]);
 
 $map->get('admin', '/admin', [
-    'controller' => 'App\Controllers\AdminController',
-    'action' => 'adminAction',
-    'auth' => true
+    'App\Controllers\AdminController',
+    'adminAction'
 ]);
 
 /******************* AUTH ********************/
 $map->get('login', '/login', [
-    'controller' => 'App\Controllers\AuthController',
-    'action' => 'getLogin'
+    'App\Controllers\AuthController',
+    'getLogin'
 ]);
 
 $map->post('auth', '/auth', [
-    'controller' => 'App\Controllers\AuthController',
-    'action' => 'postLogin'
+    'App\Controllers\AuthController',
+    'postLogin'
 ]);
 
 $map->get('logout', '/logout', [
-    'controller' => 'App\Controllers\AuthController',
-    'action' => 'getLogout',
-    'auth' => true
+    'App\Controllers\AuthController',
+    'getLogout'
 ]);
 
 /******************* USUARIOS ********************/
 
 $map->get('addUsuario', '/usuarios/add', [
-    'controller' => 'App\Controllers\UserController',
-    'action' => 'getAddUserAction',
-    'auth' => true
+    'App\Controllers\UserController',
+    'getAddUserAction'
 ]);
 
 $map->post('saveUsuario', '/usuarios/save', [
-    'controller' => 'App\Controllers\UserController',
-    'action' => 'postSaveUsuarioAction',
-    'auth' => true
+    'App\Controllers\UserController',
+    'postSaveUsuarioAction'
 ]);
 
 
 /************* EXPERIENCIAS *****************/
 $map->get('indexExperiencia', '/experiencias', [
-    'controller' => 'App\Controllers\ExperienciaController',
-    'action' => 'indexAction',
-    'auth' => true
+    'App\Controllers\ExperienciaController',
+    'indexAction'
 ]);
 
 $map->get('addExperiencia', '/experiencias/add', [
-    'controller' => 'App\Controllers\ExperienciaController',
-    'action' => 'postAddExperienciaAction',
-    'auth' => true
+    'App\Controllers\ExperienciaController',
+    'postAddExperienciaAction'
 ]);
 
 $map->post('saveExperiencia', '/experiencias/save', [
-    'controller' => 'App\Controllers\ExperienciaController',
-    'action' => 'postSaveExperienciaAction',
-    'auth' => true
+    'App\Controllers\ExperienciaController',
+    'postSaveExperienciaAction'
 ]);
 
 $map->get('deleteExperiencia', '/experiencias/delete', [
-    'controller' => 'App\Controllers\ExperienciaController',
-    'action' => 'deleteAction',
-    'auth' => true
+    'App\Controllers\ExperienciaController',
+    'deleteAction'
 ]);
 
 $map->get('undeleteExperiencia', '/experiencias/undelete', [
-    'controller' => 'App\Controllers\ExperienciaController',
-    'action' => 'undeleteAction',
-    'auth' => true
+    'App\Controllers\ExperienciaController',
+    'undeleteAction'
 ]);
 
 /************* PROYECTOS *****************/
 $map->get('addProyecto', '/proyectos/add', [
-    'controller' => 'App\Controllers\ProyectoController',
-    'action' => 'postAddProyectoAction',
-    'auth' => true
+    'App\Controllers\ProyectoController',
+    'postAddProyectoAction'
 ]);
 
 $map->post('saveProyecto', '/proyectos/save', [
-    'controller' => 'App\Controllers\ProyectoController',
-    'action' => 'postSaveProyectoAction',
-    'auth' => true
+    'App\Controllers\ProyectoController',
+    'postSaveProyectoAction'
 ]);
-
 
 
 // El matcher es un objeto que compara lo que tenemos en el request con lo que seteamos en nuestro mapa de rutas
@@ -160,26 +159,26 @@ if (!$route) {
     echo 'No route';
 } else {
 
-    // Guardamos el array asociativo  en una variable
-    $handlerData = $route->handler;
+//    // Guardamos el array asociativo  en una variable
+//    $handlerData = $route->handler;
+//
+//    $controllerName = $handlerData['controller'];
+//    $actionName = $handlerData['action'];
+//
+//    $needsAuth = $handlerData['auth'] ?? false;
+//
+//    $sessionUserId = $_SESSION['userId'] ?? null;
+//
+//    if ($needsAuth && !$sessionUserId) {
+//        // Si requiere autenticacion y el user id NO ESTA definido
+//
+//        $response = new RedirectResponse('/login');
+//        // La respuesta redirige a login
+//
+//    }
+    // Si requiere autenticacion y el user id ESTA definido
 
-    $controllerName = $handlerData['controller'];
-    $actionName = $handlerData['action'];
-
-    $needsAuth = $handlerData['auth'] ?? false;
-
-    $sessionUserId = $_SESSION['userId'] ?? null;
-
-    if ($needsAuth && !$sessionUserId) {
-        // Si requiere autenticacion y el user id NO ESTA definido
-
-        $response = new RedirectResponse('/login');
-        // La respuesta redirige a login
-
-    } else {
-        // Si requiere autenticacion y el user id ESTA definido
-
-        // usamos el valor del primer indice del array creado para cargar dinamicamente el nombre de la clase a instanciar
+    // usamos el valor del primer indice del array creado para cargar dinamicamente el nombre de la clase a instanciar
 //        if ($controllerName === 'App\Controllers\ExperienciaController') {
 //
 //            $controller = new $controllerName(new ExperienciaService());
@@ -187,20 +186,41 @@ if (!$route) {
 //        } else {
 //            $controller = new $controllerName;
 //        }
+    try {
 
-        $controller = $container->get($controllerName);
+        $harmony = new Harmony($request, new Response());
+        $harmony
+            ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()))
+            ->addMiddleware(new \App\Middlewares\AuthenticationMiddleware())
+            ->addMiddleware(new Middlewares\AuraRouter($routerContainer))
+            ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'))
+            ->run();
 
-        // invocamos el metodo del controlador con el request, que el un objeto Diactoros con todo el contenido normalizado de las superglobales
-        $response = $controller->$actionName($request);
+    } catch (\Exception $e) {
+        $log->warning($e->getMessage());
+        $emmiter = new SapiEmitter();
+        $emmiter->emit(new Response\EmptyResponse(400));
+
+    } catch (\Error $e) {
+
+        $emmiter = new SapiEmitter();
+        $emmiter->emit(new Response\EmptyResponse(500));
+
     }
 
-    foreach ($response->getHeaders() as $name => $values) {
-        foreach ($values as $value) {
-            header(sprintf('%s: %s', $name, $value), false);
-        }
-    }
 
-    http_response_code($response->getStatusCode());
-
-    echo $response->getBody();
+//    $controller = $container->get($controllerName);
+//
+//    // invocamos el metodo del controlador con el request, que el un objeto Diactoros con todo el contenido normalizado de las superglobales
+//    $response = $controller->$actionName($request);
+//
+//    foreach ($response->getHeaders() as $name => $values) {
+//        foreach ($values as $value) {
+//            header(sprintf('%s: %s', $name, $value), false);
+//        }
+//    }
+//
+//    http_response_code($response->getStatusCode());
+//
+//    echo $response->getBody();
 }
